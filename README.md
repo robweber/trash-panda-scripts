@@ -4,7 +4,13 @@ This is just a collection of custom service check scripts for the [Trash Panda P
 
 ## Install
 
-Just clone the repo!
+Clone the repo and install any requirements. Be aware that this will install the requirements to run all of the scripts, if you want to cherry pick you'll have to look at the exact script you want to run.
+
+```
+
+sudo -H pip3 install -r requirements.txt
+
+```
 
 ## Usage
 

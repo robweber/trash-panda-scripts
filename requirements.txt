@@ -1,0 +1,3 @@
+hnmp
+pyvmomi
+requests
