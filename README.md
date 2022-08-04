@@ -26,10 +26,10 @@ Clone this repo in the same parent directory as the main trash-panda repo. You'l
   /trash-panda-scripts/
 ```
 
-By default Trash Panda will define a template variable `SCRIPTS_PATH` that will point to this location. You can use this variable as a shortcut when [defining services](https://github.com/robweber/trash-panda#services).
+By default Trash Panda will define a template variable `SCRIPTS_PATH` that will point to this location. You can use this variable as a shortcut when [defining services](https://github.com/robweber/trash-panda/blob/main/README.md#services).
 
 ### Method 2
-Clone the repo wherever you want and use a `jinja_constant` to define where the path to the repo is. This is done in the [global config](https://github.com/robweber/trash-panda#global-configuration) section of the Trash Panda config file.
+Clone the repo wherever you want and use a `jinja_constant` to define where the path to the repo is. This is done in the [global config](https://github.com/robweber/trash-panda/blob/main/README.md#global-configuration) section of the Trash Panda config file.
 
 ```
 config:
@@ -38,7 +38,7 @@ config:
     SCRIPTS_PATH: /path/to/repo/
 ```
 
-Once started you can use the `SCRIPT_PATH` template variable as a shortcut to the directory when [defining services](https://github.com/robweber/trash-panda#services).
+Once started you can use the `SCRIPT_PATH` template variable as a shortcut to the directory when [defining services](https://github.com/robweber/trash-panda/blob/main/README.md#services).
 
 ## License
 
