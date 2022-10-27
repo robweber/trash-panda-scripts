@@ -25,7 +25,7 @@ def get_single_element(name, element):
 parser = argparse.ArgumentParser()
 parser.add_argument('-H', '--host', required=True, help='MythTV address or hostname')
 parser.add_argument('-p', '--port', default=6544, help='MythTV port, default is 6544')
-parser.add_argument('-t', '--type', default="tuner", choices=("tuner", "guide", "storage"),
+parser.add_argument('-t', '--type', default="tuner", choices=("tuner", "guide", "scheduled", "storage"),
                     help='The type of check to run, options are: tuner, guide, and storage')
 parser.add_argument('-w', '--warning', type=int, help='Warning value, required for guide check')
 parser.add_argument('-c', '--critical', type=int, help='Critical value, required for guide check')
@@ -65,6 +65,17 @@ elif(args.type == 'guide'):
         result = 2
 
     print(f"There are {guide_days} guide days available")
+elif(args.type == 'scheduled'):
+    # get the next scheduled programs
+    scheduled = get_single_element('Scheduled', status)
+    total_scheduled = int(scheduled.getAttribute('count'))
+
+    if(total_scheduled > 0):
+        next_program = scheduled.getElementsByTagName("Program")[0]
+        print(f"Next Recording: {next_program.getAttribute('title')} - {next_program.getAttribute('subTitle')}")
+    else:
+        print("No programs scheduled")
+        result = 2
 elif(args.type == 'storage'):
     # check available disk storage
     machineInfo = get_single_element('MachineInfo', status)
