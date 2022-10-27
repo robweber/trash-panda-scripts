@@ -3,6 +3,9 @@ Checks the status of a MythTV install by getting the status and parsing the retu
 
 Current types of checks available are:
 tuner - checks the status of each tuner
+guide - checks how many days of guide data are available
+scheduled - what is the next scheduled program, returns error if none
+storage - available storage space (total used - reclaimable)
 
 """
 import argparse
