@@ -140,7 +140,7 @@ def main():
 
     if not service_instance:
         print("Could not connect to ESXi host")
-        sys.exit(-1)
+        sys.exit(CRITICAL)
 
     atexit.register(connect.Disconnect, service_instance)
 
