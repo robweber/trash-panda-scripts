@@ -1,3 +1,4 @@
 hnmp
 pyvmomi
 requests
+veeam_easy_connect
