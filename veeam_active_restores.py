@@ -6,6 +6,7 @@ Details on those actively running are given
 """
 import argparse
 import json
+import sys
 from veeam_easy_connect import VeeamEasyConnect
 
 # parse the arguments
@@ -35,3 +36,4 @@ for j in working_only:
 result['total'] = len(res['data'])
 result['in_progress'] = len(working_only)
 print(json.dumps(result))
+sys.exit(0)
