@@ -68,6 +68,9 @@ def overall_status(host):
             print(alarm.alarm.info.name)
 
         sys.exit(WARNING)
+    elif(host.childEntity[0].hostFolder.childEntity[0].host[0].runtime.inMaintenanceMode):
+        print("Host in maintenance mode")
+        sys.exit(WARNING)
     else:
         print('Host is OK')
         sys.exit(OK)
