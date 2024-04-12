@@ -78,6 +78,7 @@ def overall_status(host):
 
 def datastores(host, warn, crit):
     all_stores = []
+    perf_data = []
     critical_stores = []
     warning_stores = []
 
@@ -86,13 +87,14 @@ def datastores(host, warn, crit):
         used = (float(aStore.summary.capacity - aStore.summary.freeSpace) / aStore.summary.capacity) * 100
 
         all_stores.append(aStore.name + " " + str(used) + "%")
-
+        perf_data.append(f"{aStore.name}={str(used)}%;{warn};{crit}")
         if(used > crit):
             critical_stores.append(aStore.name + " " + str(used) + "%")
         elif(used > warn):
             warning_stores.append(aStore.name + " " + str(used) + "%")
 
-    print('\n'.join(all_stores))
+    message = '\n'.join(all_stores)
+    print(f"{message}|{' '.join(perf_data)}")
     if(len(critical_stores) > 0):
         sys.exit(CRITICAL)
     elif(len(warning_stores) > 0):
@@ -108,24 +110,27 @@ def snapshots(vmList, warn, crit):
 
     for VM in vmList.view:
         # check if this vm has a snapshot
+        max_age = 0
         if(VM.snapshot is not None):
             for aSnap in VM.snapshot.rootSnapshotList:
                 # get the difference between these two days
                 tdelta = now - aSnap.createTime
+                max_age = tdelta.days if tdelta.days > max_age else max_age
 
                 if(tdelta.days >= crit):
                     critical.append(VM.name + " - " + str(tdelta.days) + " days")
                 elif(tdelta.days >= warn):
                     warning.append(VM.name + " - " + str(tdelta.days) + " days")
 
+    perf_data = f"|total_snapshots={len(critical) + len(warning)} max_snapshot_age={max_age};{warn};{crit}"
     if(len(critical) > 0):
-        print(critical)
+        print(f"{critical}{perf_data}")
         sys.exit(CRITICAL)
     elif(len(warning) > 0):
-        print(warning)
+        print(f"{warning}{perf_data}")
         sys.exit(WARNING)
     else:
-        print("Snapshots OK")
+        print(f"Snapshots OK{perf_data}")
         sys.exit(OK)
 
 

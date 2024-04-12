@@ -67,17 +67,18 @@ elif(args.type == 'guide'):
     elif(guide_days < args.critical):
         result = 2
 
-    print(f"There are {guide_days} guide days available")
+    print(f"There are {guide_days} guide days available|guide_days={guide_days}days;{args.warning};{args.critical}")
 elif(args.type == 'scheduled'):
     # get the next scheduled programs
     scheduled = get_single_element('Scheduled', status)
     total_scheduled = int(scheduled.getAttribute('count'))
 
+    perf_data = f"|total_schedule={total_scheduled}programs"
     if(total_scheduled > 0):
         next_program = scheduled.getElementsByTagName("Program")[0]
-        print(f"Next Recording: {next_program.getAttribute('title')} - {next_program.getAttribute('subTitle')}")
+        print(f"Next Recording: {next_program.getAttribute('title')} - {next_program.getAttribute('subTitle')}{perf_data}")
     else:
-        print("No programs scheduled")
+        print(f"No programs scheduled{perf_data}")
         result = 2
 elif(args.type == 'storage'):
     # check available disk storage
@@ -98,6 +99,7 @@ elif(args.type == 'storage'):
     elif(total < args.critical):
         result = 2
 
-    print(f"{total} MB available after auto-expire")
+    perf_data = f"|free_after_expiration={total}MB;{args.warning};{args.critical} free_space={free_space}MB expirable_space={expirable}MB"
+    print(f"{total} MB available after auto-expire{perf_data}")
 
 sys.exit(result)
